@@ -1,0 +1,95 @@
+:root {
+    --cream: #fdf6f0;
+    --sweet-brown: #d4a373;
+    --dark-brown: #5d4037;
+    --white: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, var(--cream) 0%, #f7e1cf 50%, var(--sweet-brown) 100%);
+    color: var(--dark-brown);
+    overflow-x: hidden;
+}
+
+/* Welcome Screen */
+#welcome-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--cream);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999; transition: opacity 0.8s ease;
+}
+
+.welcome-content { text-align: center; padding: 20px; }
+.welcome-content img { width: 120px; margin-bottom: 20px; }
+.welcome-content h2 { font-family: 'Playfair Display', serif; margin-bottom: 25px; }
+#startBtn {
+    padding: 12px 35px; border: none; background: var(--dark-brown);
+    color: white; border-radius: 30px; cursor: pointer; font-weight: 600;
+}
+
+/* Dekorasi */
+#stars-container, #balloons-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.4); } }
+.balloon { position: absolute; bottom: -100px; width: 30px; height: 40px; border-radius: 50%; opacity: 0.4; animation: floatUp var(--duration) linear infinite; }
+@keyframes floatUp { to { transform: translateY(-130vh) translateX(40px); } }
+
+/* Hero */
+.hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: calc(1.8rem + 1.5vw); margin-bottom: 10px; }
+
+/* Music Toggle Button */
+#musicToggle {
+    position: fixed; top: 20px; right: 20px; z-index: 1000;
+    padding: 10px 18px; border-radius: 20px; border: none;
+    background: var(--dark-brown); color: white; cursor: pointer;
+    font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: none; /* Muncul setelah welcome screen tutup */
+}
+
+/* Poetry */
+.poetry-section { padding: 60px 0; text-align: center; position: relative; z-index: 1; }
+.poetry-content { font-family: 'Playfair Display', serif; font-size: 1.1rem; max-width: 800px; margin: 0 auto; padding: 0 30px; line-height: 1.8; }
+.cute-gif { width: 100px; margin-bottom: 20px; border-radius: 15px; }
+.closing-text { margin-top: 35px; font-size: 1.2rem; }
+
+/* Grid Gallery Responsif */
+.gallery { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px; 
+    padding: 20px; 
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .gallery { grid-template-columns: repeat(3, 1fr); gap: 30px; }
+}
+
+.photo-card {
+    background: white; padding: 10px 10px 35px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    animation: floatingEffect 6s ease-in-out infinite;
+}
+
+.photo-card img { width: 100%; height: 200px; object-fit: cover; }
+
+@media (min-width: 768px) {
+    .photo-card img { height: 280px; }
+}
+
+@keyframes floatingEffect {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+}
+
+/* Utils */
+.container { max-width: 1000px; margin: 0 auto; }
+.reveal { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.fade-in { animation: fadeIn 2s forwards; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+footer { padding: 50px; text-align: center; font-size: 0.8rem; opacity: 0.5; }
