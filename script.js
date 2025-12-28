@@ -3,21 +3,23 @@ const startBtn = document.getElementById('startBtn');
 const bgMusic = document.getElementById('bgMusic');
 const musicToggle = document.getElementById('musicToggle');
 
-// Klik tombol awal
+// 1. Fungsi saat tombol "Buka Pesan" diklik
 startBtn.addEventListener('click', () => {
-    // Jalankan musik
-    bgMusic.play().catch(error => console.log("Autoplay dicegah browser"));
+    // Putar musik (Browser mengizinkan autoplay setelah ada interaksi klik)
+    bgMusic.play().catch(error => {
+        console.log("Autoplay dicegah oleh browser, musik akan menyala saat interaksi berikutnya.");
+    });
     
-    // Hilangkan Welcome Screen
+    // Hilangkan Welcome Screen dengan efek transisi fade-out
     welcomeScreen.style.opacity = '0';
     setTimeout(() => {
         welcomeScreen.style.display = 'none';
-        musicToggle.style.display = 'block'; // Tampilkan tombol on/off
-        initDecorations();
+        musicToggle.style.display = 'block'; // Tampilkan tombol On/Off musik
+        initDecorations(); // Jalankan animasi bintang dan balon
     }, 800);
 });
 
-// Kontrol On/Off Musik
+// 2. Fungsi Tombol On/Off Musik Manual
 musicToggle.addEventListener('click', () => {
     if (bgMusic.paused) {
         bgMusic.play();
@@ -28,13 +30,14 @@ musicToggle.addEventListener('click', () => {
     }
 });
 
-// Partikel Bintang & Balon
+// 3. Fungsi Animasi Dekorasi (Bintang & Balon)
 function initDecorations() {
     const sContainer = document.getElementById('stars-container');
     const bContainer = document.getElementById('balloons-container');
     const colors = ['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff'];
 
-    for (let i = 0; i < 50; i++) {
+    // Membuat Bintang (Twinkling Stars)
+    for (let i = 0; i < 45; i++) {
         const star = document.createElement('div');
         star.className = 'star';
         star.style.width = star.style.height = Math.random() * 3 + 'px';
@@ -44,7 +47,8 @@ function initDecorations() {
         sContainer.appendChild(star);
     }
 
-    for (let i = 0; i < 12; i++) {
+    // Membuat Balon Melayang (Floating Balloons)
+    for (let i = 0; i < 10; i++) {
         const b = document.createElement('div');
         b.className = 'balloon';
         b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
@@ -55,17 +59,20 @@ function initDecorations() {
     }
 }
 
-// Scroll Reveal Logic
+// 4. Fungsi Scroll Reveal (Elemen muncul saat di-scroll)
 function handleReveal() {
-    document.querySelectorAll('.reveal').forEach(el => {
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(el => {
         const windowHeight = window.innerHeight;
         const elementTop = el.getBoundingClientRect().top;
-        if (elementTop < windowHeight - 50) {
+        const elementVisible = 50; // Jarak trigger muncul
+
+        if (elementTop < windowHeight - elementVisible) {
             el.classList.add('active');
         }
     });
 }
 
+// Jalankan fungsi reveal saat scroll dan saat halaman pertama kali dimuat
 window.addEventListener('scroll', handleReveal);
-// Jalankan reveal saat load (untuk elemen yang sudah terlihat di atas)
-handleReveal();
+window.onload = handleReveal;
